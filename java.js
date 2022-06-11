@@ -45,28 +45,29 @@ class palyerAttack {
        
       }
       changing() {
+        this.draw()
         this.x = this.x + (this.movement.x)
         this.y = this.y + (this.movement.y)
 
       }
       
     }
-    const cyrcletwo = new palyerAttack(canvas.width / 2,  canvas.height / 2 , 5, 'red', 
-    { x: 1 , 
-      y:  1    })
-       
+    const cyrcle = new player(x, y,this.radius , this.color)
+    cyrcle.draw()
+
+    //empty array for our cyrcles and then louping true this array  
+    const cyrcles = []
  function playerAttackMouvement(){
   requestAnimationFrame (playerAttackMouvement)
-  cyrcletwo.draw()
-  cyrcletwo.changing()
+  cyrcles.forEach(palyerAttack => {
+    palyerAttack.changing()
+  });
   
  }
  playerAttackMouvement()
     
     
 
-const cyrcle = new player(x, y,this.radius , this.color)
-cyrcle.draw()
 
 
 
@@ -77,13 +78,17 @@ cyrcle.draw()
 
 // addEventListener to player attack
   
- addEventListener ('click' ,() => {
-  
-
+ addEventListener ('click' ,(event) => {
+  // set the angle for mouseclick on canvas
+  let angle = Math.atan2(event.clientY - canvas.height / 2 ,event.clientX - canvas.width / 2   )
+ // console.log(angle)
+ 
+  let movement = {
+    x: Math.cos(angle),
+    y : Math.sin(angle)
+  }
+ cyrcles.push( new palyerAttack(canvas.width / 2,  canvas.height / 2 , 5, 'red', 
+ movement))
   //console.log(event)
   
 })
-
-
-
-
