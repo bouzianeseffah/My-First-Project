@@ -53,11 +53,14 @@ class palyerAttack {
       
     }
     const cyrcle = new player(x, y,this.radius , this.color)
-    cyrcle.draw()
 
     //empty array for our cyrcles and then louping true this array  
     const cyrcles = []
+    //function to creat small cyrcles
  function playerAttackMouvement(){
+  cntx.clearRect(0, 0, canvas.width, canvas.height);
+  cyrcle.draw()
+
   requestAnimationFrame (playerAttackMouvement)
   cyrcles.forEach(palyerAttack => {
     palyerAttack.changing()
