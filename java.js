@@ -84,15 +84,27 @@ class palyerAttack {
     const cyrcles = []
     // empty array for our enemies
     const Enemies = []
+    
     function detectEnemies (){ 
     setInterval(() => {
-      const x = 100
-      const y = 100
-      const radius = 30
+      const radius = Math.random() * (30 - 5) + 5
+      let x
+      let y
+      // if statement to detect enemies from the edges of the canvas
+      if (Math.random() < 0.5)  {
+        x = Math.random() < 0.5 ? 0 - radius : canvas.width + radius
+        y = Math.random () * canvas.height 
+      } else {
+        x = Math.random () * canvas.width
+        y = Math.random() < 0.5 ? 0 - radius : canvas.height + radius
+      }
+      
+     
       const color = 'blue'
-      movement = {
-        x : 1,
-        y : 1 
+      let angle = Math.atan2(canvas.height / 2  - y, canvas.width / 2 - x  )
+      let movement = {
+        x: Math.cos(angle),
+        y : Math.sin(angle)
       }
       Enemies.push( new Enemy(  x, y, radius, color, movement ))
        
@@ -109,8 +121,18 @@ class palyerAttack {
     palyerAttack.changing()
   });
 
-  Enemies.forEach((Enemy) => {
+  Enemies.forEach((Enemy , index) => {
     Enemy.changing()
+      cyrcles.forEach((palyerAttack, palyerAttackIndex) => {
+      //the distance between playerAttack and 
+       let distance =  Math.hypot(palyerAttack.x - Enemy.x, palyerAttack.y - Enemy.y )
+      //console.log (distance)
+      if(distance - palyerAttack.radius - Enemy.radius < 1) {
+        //console.log('remove')
+        Enemies.splice(index, 1)
+        cyrcles.splice(palyerAttackIndex, 1)
+      }
+    });
   });
  }
  
